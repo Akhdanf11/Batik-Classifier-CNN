@@ -52,13 +52,15 @@
     <div class="container w-75">
         <div class="input-group mb-3">
             <input class="form-control form-control-lg" id="upload_file" name="upload_file" type="file">
-            <button class="btn btn-primary btn-block " type="button" id="button-addon2" onclick="startPredict()">
+            <button class="btn btn-primary btn-block " type="button" id="startPredict" onclick="startPredict()">
                 <div class="h4">
                     &emsp; GO &emsp;
                 </div>
             </button>
           </div>
           <h5 class="mt-5">Batik kamu Adalah :</h5>
+          <img src="image/Animation - 1701846459351.gif" hidden alt="">
+          <div id="loading"></div>
           <h2 id="result"></h2>
     </div>
   </main>
@@ -74,9 +76,23 @@ crossorigin="anonymous"></script>
  <script>
     const imgPreview = document.getElementById("img-preview");
     const uploadFile = document.getElementById("upload_file");
-    
+
+
+    window.addEventListener('load', ()  => {
+      document.querySelector('#startPredict').addEventListener('click', e => {
+        const loading = document.getElementById('loading');
+        loading.removeAttribute("hidden")
+        document.querySelector('#loading').innerHTML = '<img src="image/Animation - 1701846459351.gif" alt="">';
+          setTimeout(function() {
+            loading.setAttribute("hidden",true)
+            document.getElementById('result').style.display = 'block';
+          }, 2000)
+        })
+    })
+
     uploadFile.addEventListener("change", function () {
       getImgData();
+      document.getElementById('result').style.display = 'none';
     });
 
     function getImgData() {
@@ -96,6 +112,7 @@ crossorigin="anonymous"></script>
         //ambil gambar dari input id upload_File
         let formData = new FormData()
         let image = $("#upload_file")[0].files[0]
+        document.getElementById('result').style.display = 'none';
         formData.append("image", image)
 
         // request
